@@ -8,8 +8,8 @@ sudo apt install ubuntu-desktop -y
 
 # Instalar y configurar VNC
 sudo apt install x11vnc -y
-mkdir -p /home/$USER/.vnc
-x11vnc -storepasswd /home/$USER/.vnc/passwd
+mkdir -p /home/root/.vnc
+x11vnc -storepasswd /home/root/.vnc/passwd
 
 # Crear archivo de servicio para x11vnc
 sudo bash -c 'cat > /etc/systemd/system/x11vnc.service <<EOL
@@ -19,10 +19,10 @@ Requires=graphical.target
 After=graphical.target
 
 [Service]
-ExecStart=/bin/bash -c "/usr/bin/x11vnc -auth guess -display :0 -forever -noxfixes -noxdamage -repeat -rfbauth \'/home/$USER/.vnc/passwd\' -rfbport 5900 -shared"
+ExecStart=/bin/bash -c "/usr/bin/x11vnc -auth guess -display :0 -forever -noxfixes -noxdamage -repeat -rfbauth /home/$USER/.vnc/passwd -rfbport 5900 -shared"
 RestartSec=5
 Restart=always
-User=$USER
+User=root
 
 [Install]
 WantedBy=graphical.target
